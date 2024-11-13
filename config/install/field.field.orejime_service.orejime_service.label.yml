@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.orejime_service.label
+  module:
+    - orejime
+id: orejime_service.orejime_service.label
+field_name: label
+entity_type: orejime_service
+bundle: orejime_service
+label: Label
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
+locked: true

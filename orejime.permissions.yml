@@ -1,0 +1,30 @@
+add orejime entities:
+  title: 'Create new Orejime entities'
+
+administer orejime entities:
+  title: 'Administer Orejime entities'
+  description: 'Allow to access the administration form to configure Orejime entities.'
+  restrict access: true
+
+delete orejime entities:
+  title: 'Delete Orejime entities'
+
+edit orejime entities:
+  title: 'Edit Orejime entities'
+
+view published orejime entities:
+  title: 'View published Orejime entities'
+
+view unpublished orejime entities:
+  title: 'View unpublished Orejime entities'
+
+view all orejime revisions:
+  title: 'View all Orejime revisions'
+
+revert all orejime revisions:
+  title: 'Revert all Orejime revisions'
+  description: 'Role requires permission <em>view Orejime revisions</em> and <em>edit rights</em> for orejime entities in question or <em>administer orejime entities</em>.'
+
+delete all orejime revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Orejime revisions</em> and <em>delete rights</em> for orejime entities in question or <em>administer orejime entities</em>.'

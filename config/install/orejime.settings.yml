@@ -1,0 +1,15 @@
+cookie_name: 'orejime'
+expires_after_days: '365'
+privacy_policy: ''
+must_consent: 0
+must_notice: 0
+analytics: ''
+orejime_css: 'https://unpkg.com/orejime@2.2.1/dist/orejime.css'
+orejime_js: 'https://unpkg.com/orejime@2.2.1/dist/orejime.js'
+texts : ""
+debug : 0
+categories: {  }
+request_path:
+  id: request_path
+  pages: '/admin/*'
+  negate: 0

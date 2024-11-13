@@ -1,0 +1,93 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.orejime_service.orejime_service.cookies
+    - field.field.orejime_service.orejime_service.default
+    - field.field.orejime_service.orejime_service.label
+    - field.field.orejime_service.orejime_service.purposes
+    - field.field.orejime_service.orejime_service.required
+    - field.field.orejime_service.orejime_service.scripts
+    - field.field.orejime_service.orejime_service.description
+  module:
+    - orejime
+    - text
+    - user
+id: orejime_service.orejime_service.default
+targetEntityType: orejime_service
+bundle: orejime_service
+mode: default
+content:
+  cookies:
+    weight: 4
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  default:
+    weight: 7
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  label:
+    weight: 8
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  purposes:
+    weight: 9
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: string
+    region: content
+  required:
+    weight: 6
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  scripts:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  description:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  name:
+    label: hidden
+    type: string
+    weight: -4
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  user_id:
+    label: hidden
+    type: author
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

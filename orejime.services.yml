@@ -1,0 +1,4 @@
+services:
+  orejime.manager:
+    class: Drupal\orejime\Services\OrejimeManager
+    arguments: ['@config.factory', '@plugin.manager.condition', '@language_manager', '@entity_type.manager']

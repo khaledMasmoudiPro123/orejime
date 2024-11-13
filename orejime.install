@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for Orejime.
+ */
+
+use Drupal\orejime\Entity\Orejime;
+
+/**
+ * Implements hook_install().
+ */
+function orejime_install() {
+  $orejime = Orejime::create([
+    'type' => 'orejime_system',
+    'name' => 'strictly_necessary',
+    'label' => 'Strictly necessary cookies',
+    'status' => TRUE,
+    'description' => 'Without these cookies, we cannot provide you certain services on our website.',
+    'cookies' => '',
+    'default' => TRUE,
+    'required' => TRUE,
+    'purposes' => 'system',
+  ]);
+  $orejime->save();
+  $orejime = Orejime::create([
+    'type' => 'orejime_system',
+    'name' => 'tracking',
+    'status' => FALSE,
+    'label' => 'Tracking',
+    'description' => 'These cookies are used to collect information to analyze the traffic traffic to our website and how visitors are using our website.',
+    'cookies' => implode("\r\n", [
+      "_gat_{ga}",
+      "_gat_gtag_{ga}",
+      "_ga",
+      "_gat",
+      "_gid",
+      "_git",
+      "__utma",
+      "__utmb",
+      "__utmc",
+      "__utmt",
+      "__utmz",
+      "_gat_gtag_",
+      "_gat_",
+    ]),
+    'default' => TRUE,
+    'required' => FALSE,
+    'purposes' => 'tracking',
+  ]);
+  $orejime->save();
+
+}

@@ -1,0 +1,26 @@
+# Orejime routing definition
+orejime_service.settings_tab:
+  route_name: orejime_service.settings
+  title: 'Settings'
+  base_route: orejime_service.settings
+
+entity.orejime_service.canonical:
+  route_name: entity.orejime_service.canonical
+  base_route: entity.orejime_service.canonical
+  title: 'View'
+
+entity.orejime_service.edit_form:
+  route_name: entity.orejime_service.edit_form
+  base_route: entity.orejime_service.canonical
+  title: 'Edit'
+
+entity.orejime_service.version_history:
+  route_name: entity.orejime_service.version_history
+  base_route: entity.orejime_service.canonical
+  title: 'Revisions'
+
+entity.orejime_service.delete_form:
+  route_name:  entity.orejime_service.delete_form
+  base_route:  entity.orejime_service.canonical
+  title: Delete
+  weight: 10

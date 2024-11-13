@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.orejime_service.purposes
+  module:
+    - orejime
+id: orejime_service.orejime_service.purposes
+field_name: purposes
+entity_type: orejime_service
+bundle: orejime_service
+label: Purposes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
+locked: true

@@ -1,0 +1,5 @@
+entity.orejime_service.add_form:
+  route_name: entity.orejime_service.add_form
+  title: 'Add Orejime'
+  appears_on:
+    - entity.orejime_service.collection

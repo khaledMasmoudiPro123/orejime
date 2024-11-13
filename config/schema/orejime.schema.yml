@@ -1,0 +1,53 @@
+orejime.settings:
+  type: config_object
+  label: 'Orejime settings'
+  mapping:
+    iframe_consent:
+      label: 'Enable JS Iframe consent'
+      type: label
+    cookie_name:
+      label: 'Cookie Name'
+      type: label
+    expires_after_days:
+      label: 'Cookie expires after days'
+      type: label
+    cookie_domain:
+      label: 'Cookie Domain'
+      type: label
+    privacy_policy:
+      label: 'Privacy Policy'
+      type: label
+    must_consent:
+      label: 'Must consent'
+      type: boolean
+    must_notice:
+      label: 'Must notice'
+      type: boolean
+    analytics:
+      label: 'UA Code'
+      type: label
+    orejime_css:
+      label: 'CSS Orejime'
+      type: label
+    orejime_js:
+      label: 'JS Orejime'
+      type: label
+    texts:
+      label: 'Texts'
+      type: text
+    debug:
+      label: 'Debug'
+      type: boolean
+    categories:
+      label: 'Categories'
+      type: sequence
+      sequence:
+        type: mapping
+        label: Categories
+        mapping:
+          title:
+            label: 'Title'
+            type: label
+          description:
+            label: 'Description'
+            type: text

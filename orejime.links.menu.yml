@@ -1,0 +1,14 @@
+
+# Orejime menu items definition
+entity.orejime_service.collection:
+  title: 'Orejime Services list'
+  route_name: entity.orejime_service.collection
+  description: 'List Services Orejime entities'
+  parent: system.admin_content
+  weight: 100
+
+orejime_service.admin.structure.settings:
+  title: 'Orejime settings'
+  description: 'Configure Orejime entities'
+  route_name: orejime_service.settings
+  parent: system.admin_structure

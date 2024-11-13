@@ -1,0 +1,15 @@
+name: 'Orejime khaled'
+type: module
+description: 'Drupal integration of Orejime'
+core_version_requirement: ^9.2 || ^10 || ^11
+package: 'orejime'
+configure: orejime_service.settings
+dependencies:
+  - drupal:field
+  - drupal:user
+  - drupal:system
+
+# Information added by Drupal.org packaging script on 2024-09-25
+version: '2.0.10'
+project: 'orejime'
+datestamp: 1727275982

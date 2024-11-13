@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.orejime_service.cookies
+  module:
+    - orejime
+id: orejime_service.orejime_service.cookies
+field_name: cookies
+entity_type: orejime_service
+bundle: orejime_service
+label: 'Cookies List'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
+locked: true

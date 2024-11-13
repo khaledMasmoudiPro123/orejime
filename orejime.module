@@ -1,0 +1,251 @@
+<?php
+
+/**
+ * @file
+ * Contains orejime.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\Yaml\Yaml;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+/**
+ * Implements hook_help().
+ */
+function orejime_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the orejime module.
+    case 'help.page.orejime':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Drupal 8 integration of Orejime') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function orejime_library_info_build() {
+  $libraries = [];
+  $libraries['orejime_library'] = [
+    'version' => '1.0',
+    'js' => [
+      'js/orejime_drupal.js' => [],
+    ],
+    'dependencies' => [
+      'core/jquery',
+      'core/drupal',
+    ],
+  ];
+  $config = Drupal::config('orejime.settings');
+  if($config->get('iframe_consent')){
+    $libraries['orejime_library']['js']['js/orejime_iframe_consent.js'] = [];
+  }
+  $orejime_js = $config->get('orejime_js');
+  $orejime_css = $config->get('orejime_css');
+  if ($orejime_css) {
+    $libraries['orejime_library']['css']['base'][$orejime_css] = ['type' => 'external'];
+  }
+  if ($orejime_js) {
+    $libraries['orejime_library']['js'][$orejime_js] = ['type' => 'external'];
+  }
+  $orejime_color_enable = $config->get('color.enable');
+  $color_path = $config->get('color.url_css');
+  if ($orejime_color_enable && !empty($color_path)) {
+    $libraries['orejime_library']['css']['base'][$color_path] = [];
+  }
+  return $libraries;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function orejime_page_attachments(array &$page) {
+  $ignore = \Drupal::service('orejime.manager')->ignoreCurrentPage();
+  if (!$ignore) {
+    $settings = \Drupal::config('orejime.settings');
+    $manage = \Drupal::service('orejime.manager')->getServicesManage();
+    $settings_list = [
+      'manage' => $manage['services'],
+      'language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
+      'purposes' => $manage['purposes'],
+    ];
+    $list = $settings->get('analytics');
+    $settings_list['ua_list'] = $list ? explode(',', $list) : [];
+    $list_variable = [
+      'cookie_name',
+      'expires_after_days',
+      'cookie_domain',
+      'privacy_policy',
+      'must_consent',
+      'implicit_consent',
+      'debug',
+      'must_notice',
+      'logo',
+      'categories',
+    ];
+    foreach ($list_variable as $variable) {
+      $settings_list[$variable] = $settings->get($variable);
+    }
+
+    if($settings->get('texts')){
+      $settings_list['texts'] = Yaml::parse($settings->get('texts'));
+    }
+    $page['#attached']['drupalSettings']['orejime'] = $settings_list;
+  }
+  $page['#attached']['library'][] = 'orejime/orejime_library';
+
+  $config = Drupal::config('orejime.settings');
+  if($config->get('iframe_consent')){
+    $css = _orejime_css_iframe_content();
+    \Drupal::moduleHandler()->invokeAll('css_iframe_content', [&$css]);
+    $page['#attached']['drupalSettings']['css_iframe_content'] = $css;
+  }
+  $page['#cache']['tags'][] = 'config:orejime.settings';
+  $page['#cache']['tags'][] = 'orejime_service_list';
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function orejime_page_attachments_alter(array &$attachments) {
+  // Automatically opt-in for tracking by GTM and GA.
+  if (isset($attachments['#attached']['html_head'])) {
+    foreach ($attachments['#attached']['html_head'] as &$attachment) {
+      if ($attachment[0]['#tag'] == 'script' &&
+        ($attachment[1] == 'google_analytics_tracking_script' || strpos($attachment[1], 'google_tag_script_tag__') === 0)) {
+        $attachment[0]['#attributes']['data-type'] = 'application/javascript';
+        $attachment[0]['#attributes']['type'] = 'opt-in';
+        $attachment[0]['#attributes']['data-name'] = 'tracking';
+        if (isset($attachment[0]['#attributes']['src'])) {
+          $attachment[0]['#attributes']['data-src'] = $attachment[0]['#attributes']['src'];
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+function orejime_js_alter(&$javascript, AttachedAssetsInterface $assets) {
+  \Drupal::service('orejime.manager')->setOptIn($javascript);
+}
+
+function _orejime_css_iframe_content(){
+  return
+  ':host {
+    display: block;
+    position: relative;
+    background-color: black;
+        font-size: 1em;
+        font-family: "Open Sans", sans-serif;
+        line-height: 1.5;
+        color: white;
+      }
+      a {
+    color: white;
+  }
+      a:hover {
+    text-decoration: none;
+      }
+      button {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1em;
+        line-height: 1.5;
+        color: inherit;
+        display: inline-block;
+        cursor: pointer;
+      }
+      img {
+    max-width: 100%;
+        vertical-align: middle;
+      }
+      iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+      }
+      .iframe-poster {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: none;
+    border: none;
+    font-family: inherit;
+        color: white;
+        cursor: pointer;
+        display: block;
+      }
+      .iframe-poster:has(.iframe-title)::before {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+        background: linear-gradient(to bottom, #0000 50%, #000);
+        content: "";
+        opacity: .6;
+      }
+      .iframe-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+        opacity: .9;
+      }
+      .iframe-icon {
+    margin-right: 1rem;
+        opacity: .8;
+        height: 1rem;
+        vertical-align: middle;
+        fill: #fff;
+        transition: opacity .3s ease-in-out;
+      }
+      .iframe-title {
+    position: absolute;
+    inset: auto 0 0;
+        z-index: 1;
+        padding: 1rem;
+        line-height: 1rem;
+        font-weight: bold;
+        text-align: left;
+      }
+      .iframe-poster:hover .iframe-icon {
+    opacity: 1;
+  }
+      .iframe-consent {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+        display: grid;
+        place-content: center;
+        place-items: center;
+        margin: 0;
+        padding: 2rem;
+        background: black;
+        font-size: .875rem;
+        color: white;
+        text-align: center;
+      }
+      .iframe-consent button {
+    padding: .5rem 1rem;
+        margin-top: .875rem;
+        background-color: white;
+        border-radius: .25rem;
+        font-weight: 700;
+        color: black;
+      }
+      .iframe-consent button:hover {
+    background-color: lightgrey;
+      }';
+}

@@ -1,0 +1,24 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.orejime_service.required
+  module:
+    - orejime
+id: orejime_service.orejime_service.required
+field_name: required
+entity_type: orejime_service
+bundle: orejime_service
+label: Required
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Enabled
+  off_label: Disabled
+field_type: boolean
+locked: true

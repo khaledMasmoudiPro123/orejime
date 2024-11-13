@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - orejime
+id: orejime_service.default
+field_name: default
+entity_type: orejime_service
+type: boolean
+settings: {  }
+module: core
+locked: true
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

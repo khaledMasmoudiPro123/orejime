@@ -1,0 +1,9 @@
+orejime.color:
+  version: VERSION
+  css:
+    theme:
+      css/orejime_color.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

@@ -1,0 +1,22 @@
+{#
+/**
+ * @file orejime_service.html.twig
+ * Default theme implementation to present Orejime data.
+ *
+ * This template is used when viewing Orejime pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_orejime_service()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('orejime_service') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

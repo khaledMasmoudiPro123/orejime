@@ -1,0 +1,5 @@
+orejime.settings:
+  title: 'Orejime settings'
+  base_route_name: orejime_service.settings
+  names:
+    - orejime.settings
