@@ -26,9 +26,12 @@ class OrejimeResourceFetcher extends OEmbed\ResourceFetcher {
    *   The oEmbed provider repository service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
    *   The cache backend.
+   * @param int $timeout
+   *   The length of time to wait for the request before the request
+   *   should time out.
    */
-  public function __construct(ClientInterface $http_client, ProviderRepositoryInterface $providers, CacheBackendInterface $cache_backend, ConfigFactoryInterface $config_factory) {
-    parent::__construct($http_client, $providers, $cache_backend);
+  public function __construct(protected ClientInterface $http_client, protected ProviderRepositoryInterface $providers, protected CacheBackendInterface $cache_backend, protected int $timeout, ConfigFactoryInterface $config_factory) {
+    parent::__construct($http_client, $providers, $cache_backend, $timeout);
     $this->settings = $config_factory->get('orejime.settings');
   }
 

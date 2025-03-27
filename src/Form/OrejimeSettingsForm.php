@@ -6,6 +6,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Asset\CssOptimizer;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -120,8 +121,8 @@ class OrejimeSettingsForm extends ConfigFormBase {
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  public function __construct(ConfigFactoryInterface $config_factory, FactoryInterface $plugin_factory, ModuleHandlerInterface $module_handler, FileSystemInterface $file_system, TimeInterface $time, StateInterface $state, EntityTypeManagerInterface $entityTypeManager, ModuleExtensionList $extension_list_module, FileUrlGeneratorInterface $file_url_generator) {
-    parent::__construct($config_factory);
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface $typedConfigManager, FactoryInterface $plugin_factory, ModuleHandlerInterface $module_handler, FileSystemInterface $file_system, TimeInterface $time, StateInterface $state, EntityTypeManagerInterface $entityTypeManager, ModuleExtensionList $extension_list_module, FileUrlGeneratorInterface $file_url_generator) {
+    parent::__construct($config_factory, $typedConfigManager);
     $this->condition = $plugin_factory->createInstance('request_path');
     $this->moduleHandler = $module_handler;
     $this->fileSystem = $file_system;
@@ -138,6 +139,7 @@ class OrejimeSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('plugin.manager.condition'),
       $container->get('module_handler'),
       $container->get('file_system'),
