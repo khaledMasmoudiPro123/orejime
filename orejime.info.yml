@@ -1,4 +1,4 @@
-name: 'Orejime khaled'
+name: 'Orejime'
 type: module
 description: 'Drupal integration of Orejime'
 core_version_requirement: ^9.2 || ^10 || ^11
